@@ -1,5 +1,6 @@
 import Product from "../models/Product.js";
 import ProductStat from "../models/ProductStat.js";
+import Transaction from "../models/Transaction.js";
 import User from "../models/User.js";
 
 export const getProducts = async (req, res) => {
@@ -25,9 +26,51 @@ export const getProducts = async (req, res) => {
 
 export const getCustomers = async (req, res) => {
   try {
-    const customers = await User.find({role:"user"}).select("-password");
+    const customers = await User.find({ role: "user" }).select("-password");
     res.status(200).json(customers);
   } catch (error) {
     res.status(404).json({ message: error.messgage });
+  }
+};
+
+// Server Side Pagination
+export const getTransactions = async (req, res) => {
+  try {
+    const { page = 1, pageSize = 20, sort = null, search = "" } = req.query;
+    // console.log("This is the get Trans funct", req.query);
+
+    const generateSort = () => {
+      const sortParsed = JSON.parse(sort);
+      const sortFormatted = {
+        [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
+      };
+
+      return sortFormatted;
+    };
+    const sortFormatted = Boolean(sort) ? generateSort() : {};
+    // console.log("Success");
+    const transactions = await Transaction.find({
+      $or: [
+        {
+          cost: { $regex: new RegExp(search, "i") },
+        },
+        {
+          userId: { $regex: new RegExp(search, "i") },
+        },
+      ],
+    })
+      .sort(sortFormatted)
+      .skip(page * pageSize)
+      .limit(pageSize);
+    const total = await Transaction.countDocuments({
+      name: { $regex: search, $options: "i" },
+    });
+    // console.log("Hello world");
+    // console.log(total);
+
+    res.json({transactions, total}, 200);
+  } catch (error) {
+    console.log("Executing");
+    res.json({ message: error.messgage }, 404);
   }
 };
