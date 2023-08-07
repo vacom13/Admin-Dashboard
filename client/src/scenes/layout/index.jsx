@@ -25,6 +25,7 @@ const Layout = () => {
         <Navbar 
           user={data || {}}
           isSidebarOpen={isSidebarOpen}
+          isNonMobile={isNonMobile}
           setIsSidebarOpen={setIsSidebarOpen}
         />
         <Outlet />

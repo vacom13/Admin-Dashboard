@@ -24,6 +24,7 @@ import StatBox from "components/StatBox";
 
 const Dashboard = () => {
   const theme = useTheme();
+  const isNonMobile = useMediaQuery("(min-width: 600px)");
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { data, isLoading } = useGetDashboardQuery();
   const columns = [
@@ -71,7 +72,7 @@ const Dashboard = () => {
             }}
           >
             <DownloadOutlined sx={{ mr: "10px" }} />
-            Download Reports
+            {isNonMobile && <>Download Reports</>}
           </Button>
         </Box>
       </FlexBetween>
@@ -181,16 +182,12 @@ const Dashboard = () => {
           p="1.5rem"
           borderRadius="0.55rem"
         >
-          <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
+          <Typography variant="h6" sx={{color: theme.palette.secondary[100]}}>
             Sales By Category
           </Typography>
-          <BreakdownChart isDashboard={true} />
-          <Typography
-            p="0 0 6rem"
-            fontSize="0.8rem"
-            sx={{ color: theme.palette.secondary[200] }}
-          >
-            Break Down of real states and information via category
+          <BreakdownChart isDashboard={true}/>
+          <Typography p="0 0 6rem" fontSize="0.8rem" sx={{color:theme.palette.secondary[200]}}>
+            Break Down of real states and information via catogory.
           </Typography>
         </Box>
       </Box>
