@@ -7,7 +7,6 @@ import { Dashboard } from "@mui/icons-material";
 const OverviewChart = ({ isDashboard = false, view }) => {
   const theme = useTheme();
   const { data, isLoading } = useGetSalesQuery();
-  // console.log("data", data);
 
   const [totalSalesLine, totalUnitsLine] = useMemo(() => {
     if (!data) return [];
@@ -38,7 +37,6 @@ const OverviewChart = ({ isDashboard = false, view }) => {
       },
       { sales: 0, units: 0 }
     );
-    // console.log("Heelo", totalUnitsLine);
     return [[totalSalesLine], [totalUnitsLine]];
   }, [data]);
   if (!data || isLoading) return "Loading...";
@@ -62,9 +60,9 @@ const OverviewChart = ({ isDashboard = false, view }) => {
               stroke: theme.palette.secondary[200],
               strokeWidth: 1,
             },
-          },
-          text: {
-            fill: theme.palette.secondary[200],
+            text: {
+              fill: theme.palette.secondary[200],
+            },
           },
         },
         legends: {
