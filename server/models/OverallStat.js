@@ -23,7 +23,7 @@ const OverallStatSchema = new mongoose.Schema(
       of: Number,
     },
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 
 const OverallStat = mongoose.model("OverallStat", OverallStatSchema);

@@ -9,7 +9,7 @@ const TransactionSchema = new mongoose.Schema(
         of: Number
     },
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 
 const Transaction = mongoose.model("Transaction", TransactionSchema);

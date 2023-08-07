@@ -1,28 +1,15 @@
-import React, { useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { useGetTransactionsQuery } from "state/api";
-import Header from "components/Header";
+import React from "react";
 import { Box, useTheme } from "@mui/material";
-import { FamilyRestroomTwoTone } from "@mui/icons-material";
-import DataGridCustomToolbar from "components/DataGridCustomToolbar";
+import { useGetUserPerformanceQuery } from "state/api";
+import { useSelector } from "react-redux";
+import { DataGrid } from "@mui/x-data-grid";
+import Header from "components/Header";
+import CustomColumnMenu from "components/DataGridCustomColumnMenu";
 
-const Transactions = () => {
+const Performance = () => {
   const theme = useTheme();
-
-  // Values to be sent to the backend
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(20);
-  const [sort, setSort] = useState({});
-  const [search, setSearch] = useState("");
-
-  const [searchInput, setSearchInput] = useState("");
-
-  const { data, isLoading } = useGetTransactionsQuery({
-    page,
-    pageSize,
-    sort: JSON.stringify(sort),
-    search,
-  });
+  const userId = useSelector((state) => state.global.userId);
+  const { data, isLoading } = useGetUserPerformanceQuery(userId);
   const columns = [
     {
       field: "_id",
@@ -31,8 +18,8 @@ const Transactions = () => {
     },
     {
       field: "userId",
-      headerName: "User ID",
-      flex: 1,
+      headerName: "USER ID",
+      flex: 0.5,
     },
     {
       field: "createdAt",
@@ -41,7 +28,7 @@ const Transactions = () => {
     },
     {
       field: "products",
-      headerName: "# of products",
+      headerName: "# of Products",
       flex: 0.5,
       sortable: false,
       renderCell: (params) => params.value.length,
@@ -55,9 +42,13 @@ const Transactions = () => {
   ];
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="TRANSACTIONS" subtitle="Entire list of transactions" />
+      <Header
+        title="PERFORMANCE"
+        subtitle="Track your Affiliate Sales Performance Here"
+      />
       <Box
-        height="80vh"
+        mt="20px"
+        height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -84,21 +75,10 @@ const Transactions = () => {
         <DataGrid
           loading={isLoading || !data}
           getRowId={(row) => row._id}
-          rows={(data && data.transactions) || []}
+          rows={(data && data.sales) || []}
           columns={columns}
-          rowsPerPageoptions={[20, 50, 100]}
-          rowCount={(data && data.total) || 0}
-          pagination
-          page={page}
-          pageSize={pageSize}
-          paginationMode="server"
-          sortingMode="server"
-          onPaginationModelChange={(newPage) => setPage(newPage)}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-          slots={{ toolbar: DataGridCustomToolbar }}
-          slotProps={{
-            toolbar: { searchInput, setSearchInput, setSearch },
+          slots={{
+            ColumnMenu: CustomColumnMenu,
           }}
         />
       </Box>
@@ -106,4 +86,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default Performance;
