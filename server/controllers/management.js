@@ -36,7 +36,9 @@ export const getUserPerformance = async (req, res) => {
     const filteredSaleTransactions = saleTransactions.filter(
       (transactions) => transactions !== null
     );
-    res.status(200).json({ user: userWithStats[0], sales: filteredSaleTransactions });
+    res
+      .status(200)
+      .json({ user: userWithStats[0], sales: filteredSaleTransactions });
   } catch (error) {
     res.status(404).json({ error: error.message });
   }

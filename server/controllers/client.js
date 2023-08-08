@@ -38,7 +38,6 @@ export const getCustomers = async (req, res) => {
 export const getTransactions = async (req, res) => {
   try {
     const { page = 1, pageSize = 20, sort = null, search = "" } = req.query;
-    // console.log("This is the get Trans funct", req.query);
 
     const generateSort = () => {
       const sortParsed = JSON.parse(sort);
@@ -49,7 +48,6 @@ export const getTransactions = async (req, res) => {
       return sortFormatted;
     };
     const sortFormatted = Boolean(sort) ? generateSort() : {};
-    // console.log("Success");
     const transactions = await Transaction.find({
       $or: [
         {
@@ -66,12 +64,9 @@ export const getTransactions = async (req, res) => {
     const total = await Transaction.countDocuments({
       name: { $regex: search, $options: "i" },
     });
-    // console.log("Hello world");
-    // console.log(total);
 
     res.json({ transactions, total }, 200);
   } catch (error) {
-    console.log("Executing");
     res.json({ message: error.messgage }, 404);
   }
 };

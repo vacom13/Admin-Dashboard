@@ -5,14 +5,9 @@ import Header from "components/Header";
 import { ResponsiveChoropleth } from "@nivo/geo";
 import { geoData } from "state/geoData";
 
-// const MyResponsiveChoropleth = ({ data /* see data tab */ }) => (
-
-// );
-
 const Geography = () => {
   const theme = useTheme();
   const { data } = useGetGeographyQuery();
-  // console.log("data", data);
   return (
     <Box m="1.5rem 2.5rem">
       <Header

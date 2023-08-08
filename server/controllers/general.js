@@ -18,12 +18,10 @@ export const getDashboardStats = async (req, res) => {
     const currentMonth = "November";
     const currentYear = 2021;
     const currentDay = "2021-11-16";
-    console.log("Hello world");
     // Recent Transactions
     const transactions = await Transaction.find()
       .limit(50)
       .sort({ createdOn: -1 });
-    // Overall stats
     const overallStat = await OverallStat.find({ year: currentYear });
     const {
       totalCustomers,
@@ -38,7 +36,6 @@ export const getDashboardStats = async (req, res) => {
     const todayStats = overallStat[0].dailyData.find(({ date }) => {
       return date === currentDay;
     });
-    console.log(todayStats);
     res.status(200).json({
       totalCustomers,
       yearlyTotalSoldUnits,

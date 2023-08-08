@@ -123,11 +123,13 @@ const BreakdownChart = ({ isDashboard = false }) => {
         textAlign="center"
         pointerEvents="none"
         sx={{
-            transform:isDashboard?"translate(-75%,-170%)":"translate(-50%,-100%)"
+          transform: isDashboard
+            ? "translate(-75%,-170%)"
+            : "translate(-50%,-100%)",
         }}
       >
         <Typography variant="h6">
-            {!isDashboard && "Total:"} ${data.yearlySalesTotal}
+          {!isDashboard && "Total:"} ${data.yearlySalesTotal}
         </Typography>
       </Box>
     </Box>

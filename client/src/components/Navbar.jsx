@@ -91,25 +91,31 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen, isNonMobile }) => {
                 borderRadius="50%"
                 sx={{ objectFit: "cover" }}
               />
-              {isNonMobile && <Box textAlign="left">
-                <Typography
-                  fontWeight="bold"
-                  fontSize="0.85rem"
-                  sx={{ color: theme.palette.secondary[100] }}
-                >
-                  {user.name}
-                </Typography>
-                <Typography
-                  fontWeight="bold"
-                  fontSize="0.75rem"
-                  sx={{ color: theme.palette.secondary[200] }}
-                >
-                  {user.occupation}
-                </Typography>
-              </Box> &&
-              <ArrowDropDownOutlined
-                sx={{ color: theme.palette.secondary[300], fontSize: "25px" }}
-              />}
+              {isNonMobile && (
+                  <Box textAlign="left">
+                    <Typography
+                      fontWeight="bold"
+                      fontSize="0.85rem"
+                      sx={{ color: theme.palette.secondary[100] }}
+                    >
+                      {user.name}
+                    </Typography>
+                    <Typography
+                      fontWeight="bold"
+                      fontSize="0.75rem"
+                      sx={{ color: theme.palette.secondary[200] }}
+                    >
+                      {user.occupation}
+                    </Typography>
+                  </Box>
+                ) && (
+                  <ArrowDropDownOutlined
+                    sx={{
+                      color: theme.palette.secondary[300],
+                      fontSize: "25px",
+                    }}
+                  />
+                )}
             </Button>
             <Menu
               anchorEl={anchorEl}

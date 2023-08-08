@@ -24,7 +24,7 @@ const Daily = () => {
       color: theme.palette.secondary[600],
       data: [],
     };
-    Object.values(dailyData).forEach(({date, totalSales, totalUnits}) => {
+    Object.values(dailyData).forEach(({ date, totalSales, totalUnits }) => {
       const dateFormatted = new Date(date);
       if (dateFormatted >= startDate && dateFormatted <= endDate) {
         const splitDate = date.substring(date.indexOf("-") + 1);
